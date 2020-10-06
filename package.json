@@ -1,0 +1,25 @@
+{
+  "name": "loanmodify",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.5",
+    "cookie-session": "^1.4.0",
+    "express": "^4.17.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/prncher/loanmodify"
+  },
+  "scripts": {
+    "build": "cd src/ui && npm install && npm run build",
+    "debug": "node --inspect-brk src/index.js"
+  },
+  "private": true,
+  "author": "Prince Cheruvathur <prncher@gmail.com>",
+  "bugs": {
+    "email": "prncher@gmail.com"
+  }
+}

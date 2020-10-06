@@ -102,3 +102,19 @@ dist
 
 # TernJS port file
 .tern-port
+
+#amplify
+amplify/
+
+node_modules/
+aws-exports.js
+awsconfiguration.json
+amplifyconfiguration.json
+amplify-build-config.json
+amplify-gradle-config.json
+amplifytools.xcconfig
+
+#ui
+/src/ui/node_modules/
+/src/ui/build/
+/src/ui/dist/
