@@ -14,8 +14,9 @@
     "url": "git+https://github.com/prncher/loanmodify"
   },
   "scripts": {
-    "build": "cd src/ui && npm install && npm run build",
-    "debug": "node --inspect-brk src/index.js"
+    "build": "npm install && cd src/ui && npm install && npm run build",
+    "debug": "node --inspect-brk src/index.js",
+    "start": "node src/index.js"
   },
   "private": true,
   "author": "Prince Cheruvathur <prncher@gmail.com>",
