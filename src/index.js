@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const path = require('path');
 const crypto = require('crypto');
 const config = require('./config.json');
+const defaultroutes = require('./routes');
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.use(cookieParser())
 
 /* ----- serve static ----- */
 app.use(express.static(path.join(__dirname, 'ui/build')));
+app.use('/', defaultroutes)
 
 const port = config.port || 3000;
 app.listen(port);

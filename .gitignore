@@ -118,4 +118,6 @@ amplifytools.xcconfig
 /src/ui/node_modules/
 /src/ui/build/
 /src/ui/dist/
+/src/ui/package-lock.json
+
 package-lock.json
