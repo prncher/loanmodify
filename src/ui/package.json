@@ -2,6 +2,8 @@
   "name": "loanmodify-ui",
   "version": "0.1.0",
   "private": true,
+  "author": "Prince Cheruvathur",
+  "license": "MIT",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
@@ -10,13 +12,16 @@
     "@types/node": "^12.12.64",
     "@types/react": "^16.9.51",
     "@types/react-dom": "^16.9.8",
+    "@types/react-native": "^0.63.37",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.3",
+    "react-native": "^0.63.4",
+    "react-scripts": "^4.0.1",
     "typescript": "^3.7.5",
     "webauthn-react": "^0.1.0"
   },
   "scripts": {
+    "start2": "react-native start",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
