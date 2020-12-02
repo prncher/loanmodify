@@ -10,12 +10,16 @@ class MainPageBase extends React.Component<UserAccountProps> {
     }
 
     accountInfo = (): React.ReactNode => {
-        return this.props.loggedIn 
-        ? (<React.Fragment>
-            <span>Hi {this.props.userDisplayname}</span>
-            <a href="#" onClick={this.props.logOut} id="logout">Logout</a>
-        </React.Fragment>) 
-        : (<span>Sign in to access the resources</span>);
+        return this.props.loggedIn
+            ? (<React.Fragment>
+                <span>Hi {this.props.userDisplayname}</span>
+                <button
+                    type="button"
+                    className="link-button" 
+                    onClick={this.props.logOut} 
+                    id="logout">Logout</button>
+            </React.Fragment>)
+            : (<span>Sign in to access the resources</span>);
 
     }
 }

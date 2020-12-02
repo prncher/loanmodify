@@ -10,15 +10,16 @@
     "@testing-library/user-event": "^7.2.1",
     "@types/jest": "^24.9.1",
     "@types/node": "^12.12.64",
-    "@types/react": "^16.9.51",
-    "@types/react-dom": "^16.9.8",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
     "@types/react-native": "^0.63.37",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
     "react-native": "^0.63.4",
+    "react-native-web": "^0.14.8",
     "react-scripts": "^4.0.1",
     "typescript": "^3.7.5",
-    "webauthn-react": "^0.1.0"
+    "webauthn-react": "^0.1.1"
   },
   "scripts": {
     "start2": "react-native start",

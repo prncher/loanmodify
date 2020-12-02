@@ -19,7 +19,7 @@ router.get('/isLoggedIn', (request, response) => {
 
 router.get('/logout', (request, response) => {
     request.session.loggedIn = false;
-    request.session.username = undefined;
+    request.session.userEmail = undefined;
 
     response.json({
         'status': 'ok'
@@ -35,43 +35,43 @@ router.get('/accountInfo', (request, response) => {
     } else {
         response.json({
             'status': 'ok',
-            'name': database[request.session.username].name,
+            'name': database[request.session.userEmail].name,
         })
     }
 })
 
 router.post('/register', (request, response) => {
-    if(!request.body || !request.body.username || !request.body.password || !request.body.name) {
+    if(!request.body || !request.body.userEmail || !request.body.password || !request.body.name) {
         response.json({
             'status': 'failed',
-            'message': 'Request missing username or password!'
+            'message': 'Request missing email or password!'
         })
 
         return
     }
 
-    let username = request.body.username;
+    let userEmail = request.body.userEmail;
     let password = request.body.password;
     let name     = request.body.name;
 
-    if(database[username]) {
+    if(database[userEmail]) {
         response.json({
             'status': 'failed',
-            'message': `Username ${username} already exists`
+            'message': `Email ${userEmail} already exists`
         })
 
         return
     }
 
 
-    database[username] = {
+    database[userEmail] = {
         'password': password,
         'name': name,
         'id': utils.randomBase64URLBuffer()
     }
 
     request.session.loggedIn = true;
-    request.session.username = username
+    request.session.userEmail = userEmail
 
     response.json({
         'status': 'ok'
@@ -80,29 +80,29 @@ router.post('/register', (request, response) => {
 
 
 router.post('/login', (request, response) => {
-    if(!request.body || !request.body.username || !request.body.password) {
+    if(!request.body || !request.body.userEmail || !request.body.password) {
         response.json({
             'status': 'failed',
-            'message': 'Request missing username or password!'
+            'message': 'Request missing email or password!'
         });
 
         return
     }
 
-    let username = request.body.username;
+    let userEmail = request.body.userEmail;
     let password = request.body.password;
 
-    if(!database[username] || database[username].password !== password) {
+    if(!database[userEmail] || database[userEmail].password !== password) {
         response.json({
             'status': 'failed',
-            'message': `Wrong username or password!`
+            'message': `Wrong email or password!`
         });
 
         return
     }
 
     request.session.loggedIn = true;
-    request.session.username = username
+    request.session.userEmail = userEmail
 
     response.json({
         'status': 'ok'
