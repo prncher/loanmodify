@@ -11,6 +11,7 @@
     "cookie-parser": "^1.4.5",
     "cookie-session": "^1.4.0",
     "express": "^4.17.1",
+    "firebase": "^8.1.1",
     "iso-3166-1": "^2.0.1"
   },
   "repository": {
@@ -18,7 +19,7 @@
     "url": "git+https://github.com/prncher/loanmodify"
   },
   "scripts": {
-    "build": "npm install && cd src/ui && rm -rf build && npm install && npm run build",
+    "build": "npm install && cd src/ui && rm -rf build && npm install && npm run build-ui",
     "debug": "node --inspect-brk src/index.js",
     "start": "node src/index.js"
   },
