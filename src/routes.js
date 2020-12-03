@@ -56,7 +56,7 @@ router.post('/register', (request, response) => {
     let password = request.body.password;
     let name = request.body.name;
 
-    this.fb.auth().createUserWithEmailAndPassword(userEmail, password)
+    router.fb.auth().createUserWithEmailAndPassword(userEmail, password)
         .then((user) => {
             // Signed in 
             database[userEmail] = {
@@ -117,7 +117,7 @@ router.post('/login', (request, response) => {
     let userEmail = request.body.userEmail;
     let password = request.body.password;
 
-    this.fb.auth().signInWithEmailAndPassword(email, password)
+    router.fb.auth().signInWithEmailAndPassword(email, password)
         .then((user) => {
             // Signed in 
             request.session.loggedIn = true;
