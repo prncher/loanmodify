@@ -8,6 +8,8 @@ const config = require('./config.json');
 const defaultroutes = require('./routes');
 const firebase = require("firebase/app");
 require("firebase/auth");
+require('@google-cloud/debug-agent').start({serviceContext: {enableCanary: true}});
+
 
 firebase.initializeApp(config.firebaseConfig)
 defaultroutes.setFirebase(firebase);
