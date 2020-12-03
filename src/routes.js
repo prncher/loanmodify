@@ -117,7 +117,7 @@ router.post('/login', (request, response) => {
     let userEmail = request.body.userEmail;
     let password = request.body.password;
 
-    firebase.auth().signInWithEmailAndPassword(email, password)
+    this.fb.auth().signInWithEmailAndPassword(email, password)
         .then((user) => {
             // Signed in 
             request.session.loggedIn = true;
