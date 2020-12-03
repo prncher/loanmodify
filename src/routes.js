@@ -1,14 +1,14 @@
-const express  = require('express');
-const router   = express.Router();
-const utils    = require('./utils');
-
-var firebase = require("firebase/app");
+const express = require('express');
+const router = express.Router();
+const utils = require('./utils');
 
 // In memory databse 
 const database = {};
 
+router.setFirebase = (fb) => router.fb = fb;
+
 router.get('/isLoggedIn', (request, response) => {
-    if(!request.session.loggedIn) {
+    if (!request.session.loggedIn) {
         response.json({
             'status': 'failed'
         })
@@ -29,7 +29,7 @@ router.get('/logout', (request, response) => {
 })
 
 router.get('/accountInfo', (request, response) => {
-    if(!request.session.loggedIn) {
+    if (!request.session.loggedIn) {
         response.json({
             'status': 'failed',
             'message': 'Access denied'
@@ -43,7 +43,7 @@ router.get('/accountInfo', (request, response) => {
 })
 
 router.post('/register', (request, response) => {
-    if(!request.body || !request.body.userEmail || !request.body.password || !request.body.name) {
+    if (!request.body || !request.body.userEmail || !request.body.password || !request.body.name) {
         response.json({
             'status': 'failed',
             'message': 'Request missing email or password!'
@@ -54,26 +54,49 @@ router.post('/register', (request, response) => {
 
     let userEmail = request.body.userEmail;
     let password = request.body.password;
-    let name     = request.body.name;
+    let name = request.body.name;
 
-    if(database[userEmail]) {
-        response.json({
-            'status': 'failed',
-            'message': `Email ${userEmail} already exists`
+    this.fb.auth().createUserWithEmailAndPassword(userEmail, password)
+        .then((user) => {
+            // Signed in 
+            database[userEmail] = {
+                'name': name,
+                'id': utils.randomBase64URLBuffer()
+            }
+
+            response.json({
+                'status': 'ok'
+            })
         })
+        .catch((error) => {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            response.json({
+                'status': 'failed: ' + errorCode,
+                'message': `Email ${userEmail} already exists -` + errorMessage
+            })
 
-        return
-    }
+            return
+        });
+
+    // if(database[userEmail]) {
+    //     response.json({
+    //         'status': 'failed',
+    //         'message': `Email ${userEmail} already exists`
+    //     })
+
+    //     return
+    // }
 
 
-    database[userEmail] = {
-        'password': password,
-        'name': name,
-        'id': utils.randomBase64URLBuffer()
-    }
+    // database[userEmail] = {
+    //     'password': password,
+    //     'name': name,
+    //     'id': utils.randomBase64URLBuffer()
+    // }
 
-    request.session.loggedIn = true;
-    request.session.userEmail = userEmail
+    // request.session.loggedIn = true;
+    // request.session.userEmail = userEmail
 
     response.json({
         'status': 'ok'
@@ -82,7 +105,7 @@ router.post('/register', (request, response) => {
 
 
 router.post('/login', (request, response) => {
-    if(!request.body || !request.body.userEmail || !request.body.password) {
+    if (!request.body || !request.body.userEmail || !request.body.password) {
         response.json({
             'status': 'failed',
             'message': 'Request missing email or password!'
@@ -94,14 +117,35 @@ router.post('/login', (request, response) => {
     let userEmail = request.body.userEmail;
     let password = request.body.password;
 
-    if(!database[userEmail] || database[userEmail].password !== password) {
-        response.json({
-            'status': 'failed',
-            'message': `Wrong email or password!`
+    firebase.auth().signInWithEmailAndPassword(email, password)
+        .then((user) => {
+            // Signed in 
+            request.session.loggedIn = true;
+            request.session.userEmail = userEmail
+
+            response.json({
+                'status': 'ok'
+            })
+        })
+        .catch((error) => {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            response.json({
+                'status': 'failed: ' + errorCode,
+                'message': `Email ${userEmail} already exists -` + errorMessage
+            })
+
+            return
         });
 
-        return
-    }
+    // if (!database[userEmail] || database[userEmail].password !== password) {
+    //     response.json({
+    //         'status': 'failed',
+    //         'message': `Wrong email or password!`
+    //     });
+
+    //     return
+    // }
 
     request.session.loggedIn = true;
     request.session.userEmail = userEmail

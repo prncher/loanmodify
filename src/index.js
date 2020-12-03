@@ -6,6 +6,10 @@ const path = require('path');
 const crypto = require('crypto');
 const config = require('./config.json');
 const defaultroutes = require('./routes');
+const firebase = require("firebase/app");
+
+firebase.initializeApp(config.firebaseConfig);
+defaultroutes.setFirebase(firebase);
 
 const app = express();
 
