@@ -2,11 +2,5 @@
     "port": 8080,
     "origin": "http://localhost",
     "firebaseConfig":  {
-        "apiKey": "AIzaSyAm2EXMXO_EZOOK38okzGNQ8pw1YixyY90",
-        "authDomain": "webauthntest3.firebaseapp.com",
-        "projectId": "webauthntest3",
-        "storageBucket": "webauthntest3.appspot.com",
-        "messagingSenderId": "398798298035",
-        "appId": "1:398798298035:web:25d2f2d655fe18fb4509c6"
       }
 }
