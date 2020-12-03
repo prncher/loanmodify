@@ -7,8 +7,9 @@ const crypto = require('crypto');
 const config = require('./config.json');
 const defaultroutes = require('./routes');
 const firebase = require("firebase/app");
+require("firebase/auth");
 
-firebase.initializeApp(config.firebaseConfig);
+firebase.initializeApp(config.firebaseConfig)
 defaultroutes.setFirebase(firebase);
 
 const app = express();

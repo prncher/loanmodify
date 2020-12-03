@@ -56,28 +56,37 @@ router.post('/register', (request, response) => {
     let password = request.body.password;
     let name = request.body.name;
 
-    router.fb.auth().createUserWithEmailAndPassword(userEmail, password)
-        .then((user) => {
-            // Signed in 
-            database[userEmail] = {
-                'name': name,
-                'id': utils.randomBase64URLBuffer()
-            }
+    try {
+        router.fb.auth().createUserWithEmailAndPassword(userEmail, password)
+            .then((user) => {
+                // Signed in 
+                database[userEmail] = {
+                    'name': name,
+                    'id': utils.randomBase64URLBuffer()
+                }
 
-            response.json({
-                'status': 'ok'
+                response.json({
+                    'status': 'ok'
+                })
             })
+            .catch((error) => {
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                response.json({
+                    'status': 'failed: ' + errorCode,
+                    'message': `Email ${userEmail} already exists -` + errorMessage
+                })
+
+                return
+            });
+    } catch {
+        response.json({
+            'status': 'failed ',
+            'message': `Unknown Error`
         })
-        .catch((error) => {
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            response.json({
-                'status': 'failed: ' + errorCode,
-                'message': `Email ${userEmail} already exists -` + errorMessage
-            })
+        return;
 
-            return
-        });
+    }
 
     // if(database[userEmail]) {
     //     response.json({
@@ -116,27 +125,35 @@ router.post('/login', (request, response) => {
 
     let userEmail = request.body.userEmail;
     let password = request.body.password;
+    try {
+        router.fb.auth().signInWithEmailAndPassword(email, password)
+            .then((user) => {
+                // Signed in 
+                request.session.loggedIn = true;
+                request.session.userEmail = userEmail
 
-    router.fb.auth().signInWithEmailAndPassword(email, password)
-        .then((user) => {
-            // Signed in 
-            request.session.loggedIn = true;
-            request.session.userEmail = userEmail
-
-            response.json({
-                'status': 'ok'
+                response.json({
+                    'status': 'ok'
+                })
             })
+            .catch((error) => {
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                response.json({
+                    'status': 'failed: ' + errorCode,
+                    'message': `Email ${userEmail} already exists -` + errorMessage
+                })
+
+                return
+            });
+    } catch {
+        response.json({
+            'status': 'failed ',
+            'message': `Unknown Error`
         })
-        .catch((error) => {
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            response.json({
-                'status': 'failed: ' + errorCode,
-                'message': `Email ${userEmail} already exists -` + errorMessage
-            })
+        return;
 
-            return
-        });
+    }
 
     // if (!database[userEmail] || database[userEmail].password !== password) {
     //     response.json({
